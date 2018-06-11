@@ -1,5 +1,4 @@
 import pytest
-import time
 from selenium import webdriver
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -13,6 +12,7 @@ def driver(request):
     #print(wd.capabilities)
     request.addfinalizer(wd.quit)
     return wd
+
 
 def test_left_menu_validation(driver):
     driver.get("http://localhost/litecart/admin/")
@@ -118,17 +118,10 @@ def test_left_menu_validation(driver):
     is_element_present(driver, By.XPATH, '//td[@id="content"]/h1[contains(.,"vQmods")]')
 
 
-    #list_of_subs = driver.find_elements_by_css_selector("ul.docs li")
-    #list_of_subs[3].click()
-    #print(list_of_subs, sep='\n')
-    time.sleep(3)
-
 def is_element_present(driver, *args):
-#def is_element_present(driver, by, bydetails):
   try:
     wait = WebDriverWait(driver, 10)
     wait.until(EC.presence_of_element_located((args)))
-    #driver.find_element(*args)
     return True
   except NoSuchElementException:
     return False
